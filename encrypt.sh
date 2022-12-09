@@ -14,10 +14,11 @@ run() {
     if (( "$decrypt" )); then
         openssl aes-256-cbc -d -k "$password" -a -salt -pbkdf2 -iter 1000 -in "$i" -out "${i%.enc}"
     else
-        openssl aes-256-cbc -k "$password" -a -salt -pbkdf2 -iter 1000 -in "$i" -out "$i".enc
+        openssl aes-256-cbc    -k "$password" -a -salt -pbkdf2 -iter 1000 -in "$i" -out "$i".enc
     fi
 }
 
+cd "${0%/*}"
 if [[ $# -gt 0 ]]; then
     for i; do
         run "$i"
@@ -33,3 +34,4 @@ else
         done
     fi
 fi
+cd - >/dev/null
